@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Table using While Loop</title>
+</head>
+<body>
+
+<script>
+    let num = 5;
+    let i = 1;
+    let result = "";
+
+    while (i <= 10) { //while loop 
+        let line = num + " x " + i + " = " + (num * i);
+        console.log(line);
+        result += line + "\n";
+        i++;
+    }
+
+    alert("Table of " + num + ":\n\n" + result);
+</script>
+
+</body>
+</html>

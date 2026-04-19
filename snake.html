@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Snake & Ladder - 2 Player</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background: linear-gradient(135deg,#c3ecff,#e2f1ff);
+}
+
+h1 { margin: 10px; }
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(10, 60px);
+    grid-template-rows: repeat(10, 60px);
+    width: 600px;
+    margin: 20px auto;
+    border: 3px solid #333;
+}
+
+.cell {
+    border: 1px solid #999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    position: relative;
+}
+
+.player1, .player2 {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    position: absolute;
+}
+
+.player1 { background: red; left: 5px; }
+.player2 { background: blue; right: 5px; }
+
+.snake { background: #ffcccc; }
+.ladder { background: #ccffcc; }
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#dice {
+    font-size: 40px;
+    margin: 10px;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1> Snake & Ladder </h1>
+
+<div id="dice"></div>
+<button onclick="rollDice()">Roll Dice</button>
+<p id="status"></p>
+
+<div class="board" id="board"></div>
+
+<script>
+
+let board = document.getElementById("board");
+
+let snakes = { 99:54, 70:55, 52:42, 25:2, 95:72 };
+let ladders = { 6:25, 11:40, 17:69, 46:90, 60:85 };
+
+let p1 = 1;
+let p2 = 1;
+let currentPlayer = 1;
+
+// Create zig-zag board
+function createBoard() {
+    let number = 100;
+    for (let row = 10; row >= 1; row--) {
+
+        let rowCells = [];
+        for (let col = 1; col <= 10; col++) {
+            rowCells.push(number);
+            number--;
+        }
+
+        if (row % 2 === 0) rowCells.reverse();
+
+        rowCells.forEach(num => {
+            let cell = document.createElement("div");
+            cell.classList.add("cell");
+            cell.id = "cell-" + num;
+            cell.innerText = num;
+
+            if (snakes[num]) cell.classList.add("snake");
+            if (ladders[num]) cell.classList.add("ladder");
+
+            board.appendChild(cell);
+        });
+    }
+
+    updatePlayers();
+}
+
+function updatePlayers() {
+    document.querySelectorAll(".player1, .player2").forEach(p => p.remove());
+
+    let playerOne = document.createElement("div");
+    playerOne.classList.add("player1");
+    document.getElementById("cell-" + p1).appendChild(playerOne);
+
+    let playerTwo = document.createElement("div");
+    playerTwo.classList.add("player2");
+    document.getElementById("cell-" + p2).appendChild(playerTwo);
+}
+
+function animateDice(finalNumber) {
+    let dice = document.getElementById("dice");
+    let count = 0;
+    let interval = setInterval(() => {
+        dice.innerText = Math.floor(Math.random()*6)+1;
+        count++;
+        if(count > 10) {
+            clearInterval(interval);
+            dice.innerText = finalNumber;
+        }
+    }, 100);
+}
+
+function rollDice() {
+
+    let dice = Math.floor(Math.random()*6)+1;
+    animateDice(dice);
+
+    setTimeout(() => {
+
+        let position = currentPlayer === 1 ? p1 : p2;
+
+        if(position + dice <= 100)
+            position += dice;
+
+        if(snakes[position]) position = snakes[position];
+        if(ladders[position]) position = ladders[position];
+
+        if(currentPlayer === 1) p1 = position;
+        else p2 = position;
+
+        if(position === 100) {
+            document.getElementById("status").innerText =
+                "🎉 Player " + currentPlayer + " Wins!";
+            return;
+        }
+
+        currentPlayer = currentPlayer === 1 ? 2 : 1;
+        document.getElementById("status").innerText =
+            "Player " + currentPlayer + "'s Turn";
+
+        updatePlayers();
+
+    }, 1200);
+}
+
+createBoard();
+document.getElementById("status").innerText = "Player 1's Turn";
+
+</script>
+
+</body>
+</html>

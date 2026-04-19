@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fun Calculator</title>
+
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            transition: 0.4s;
+        }
+
+        /* LIGHT MODE (Default) */
+        body.light-mode {
+            background: linear-gradient(135deg, #fdfbfb, #d4fcf9);
+        }
+
+        /* DARK MODE */
+        body.dark-mode {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+        }
+
+        .calculator {
+            padding: 20px;
+            border-radius: 15px;
+            width: 260px;
+            transition: 0.4s;
+        }
+
+        .light-mode .calculator {
+            background: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .dark-mode .calculator {
+            background: #121b22;
+            box-shadow: 0 0 25px #00bcd4;
+        }
+
+        #display {
+            width: 100%;
+            height: 50px;
+            margin-bottom: 15px;
+            text-align: right;
+            font-size: 20px;
+            padding: 5px;
+            border-radius: 8px;
+            border: none;
+        }
+
+        .light-mode #display {
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .dark-mode #display {
+            background: #0f2027;
+            color: #00e5ff;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        button {
+            padding: 15px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .light-mode button {
+            background: #e3f2fd;
+            color: #333;
+        }
+
+        .dark-mode button {
+            background: #1e2a32;
+            color: #00e5ff;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        button:active {
+            transform: scale(0.9);
+        }
+
+        .equal {
+            background: #4caf50 !important;
+            color: white !important;
+        }
+
+        .clear {
+            background: #f44336 !important;
+            color: white !important;
+        }
+
+        .theme-btn {
+            margin-bottom: 15px;
+            width: 100%;
+        }
+
+    </style>
+</head>
+
+<body class="light-mode">
+
+<div class="calculator">
+
+    <button onclick="toggleTheme()" class="theme-btn">🌗 Toggle Theme</button>
+
+    <input type="text" id="display" disabled>
+
+    <div class="buttons">
+        <button onclick="clearDisplay()" class="clear">C</button>
+        <button onclick="appendValue('/')">/</button>
+        <button onclick="appendValue('*')">*</button>
+        <button onclick="appendValue('-')">-</button>
+
+        <button onclick="appendValue('7')">7</button>
+        <button onclick="appendValue('8')">8</button>
+        <button onclick="appendValue('9')">9</button>
+        <button onclick="appendValue('+')">+</button>
+
+        <button onclick="appendValue('4')">4</button>
+        <button onclick="appendValue('5')">5</button>
+        <button onclick="appendValue('6')">6</button>
+        <button onclick="calculate()" class="equal">=</button>
+
+        <button onclick="appendValue('1')">1</button>
+        <button onclick="appendValue('2')">2</button>
+        <button onclick="appendValue('3')">3</button>
+        <button onclick="appendValue('0')">0</button>
+    </div>
+
+</div>
+
+<script>
+    function appendValue(value) {
+        document.getElementById("display").value += value;
+    }
+
+    function clearDisplay() {
+        document.getElementById("display").value = "";
+    }
+
+    function calculate() {
+        try {
+            let result = eval(document.getElementById("display").value);
+            document.getElementById("display").value = result;
+        } catch {
+            let jokes = [
+                "Math broke 😭",
+                "Try again genius 🤓",
+                "Numbers are fighting!",
+                "Error 404: Brain not found",
+                "Even calculator is confused 😂"
+            ];
+            let random = jokes[Math.floor(Math.random() * jokes.length)];
+            document.getElementById("display").value = random;
+        }
+    }
+
+    function toggleTheme() {
+        document.body.classList.toggle("dark-mode");
+        document.body.classList.toggle("light-mode");
+    }
+</script>
+
+</body>
+</html>
