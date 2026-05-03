@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>BOM Demo</title>
+</head>
+<body>
+
+<h3>BOM Demo</h3>
+
+<button onclick="showInfo()">Show Browser Info</button>
+<button onclick="goBack()">Go Back</button>
+
+<p id="output"></p>
+
+<script>
+function showInfo() {
+  let info = "";
+
+  // Window object
+  info += "Window Width: " + window.innerWidth + "<br>";
+  info += "Window Height: " + window.innerHeight + "<br><br>";
+
+  // Navigator object
+  info += "Browser Name: " + navigator.appName + "<br>";
+  info += "User Agent: " + navigator.userAgent + "<br><br>";
+
+  // Screen object
+  info += "Screen Width: " + screen.width + "<br>";
+  info += "Screen Height: " + screen.height + "<br><br>";
+
+  // History object
+  info += "History Length: " + history.length + "<br>";
+
+  document.getElementById("output").innerHTML = info;
+}
+
+// History navigation
+function goBack() {
+  history.back();
+}
+</script>
+
+</body>
+</html>
