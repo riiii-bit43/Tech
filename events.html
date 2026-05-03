@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dynamic Page</title>
+</head>
+<body>
+
+<h3>Enter a number:</h3>
+<input type="number" id="num">
+<button onclick="generate()">Generate Table</button>
+
+<div id="output"></div>
+
+<script>
+function generate() {
+  let n = document.getElementById("num").value;
+  let result = "";
+
+  // Conditional logic
+  if (n <= 0) {
+    result = "Please enter a positive number";
+  } else {
+    // Loop
+    for (let i = 1; i <= 10; i++) {
+      result += n + " x " + i + " = " + (n * i) + "<br>";
+    }
+  }
+
+  // innerHTML to display result
+  document.getElementById("output").innerHTML = result;
+}
+</script>
+
+</body>
+</html>
