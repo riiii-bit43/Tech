@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>DOM Demo</title>
+</head>
+<body>
+
+<h3 id="title">Hello</h3>
+
+<p class="text">Paragraph 1</p>
+<p class="text">Paragraph 2</p>
+
+<input type="text" name="username" value="Megha">
+
+<div>Div 1</div>
+<div>Div 2</div>
+
+<button onclick="changeContent()">Click Me</button>
+
+<script>
+function changeContent() {
+
+  // getElementById
+  document.getElementById("title").innerHTML = "Changed by ID";
+
+  // getElementsByClassName
+  let cls = document.getElementsByClassName("text");
+  cls[0].style.color = "red";
+
+  // getElementsByName
+  let name = document.getElementsByName("username");
+  name[0].value = "Updated Name";
+
+  // getElementsByTagName
+  let divs = document.getElementsByTagName("div");
+  divs[0].innerHTML = "Changed Div";
+}
+</script>
+
+</body>
+</html>
